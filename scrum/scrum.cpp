@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 	std::string html_tag;
 	std::string html_class;
 	
-	scraper.add_option("--url, --u", url, "the Url of the website to scrape");
+	scraper.add_option("--url, --u", url, "the URL of the website to scrape");
 	scraper.add_option("--tag, --t", html_tag, "the html tag to search for");
 	scraper.add_option("--class, --c", html_class, "the class to search for");
 
@@ -33,7 +33,17 @@ int main(int argc, char **argv)
 	auto r = cpr::Get(cpr::Url{ url });
 	if (r.status_code != 200) throw std::runtime_error("CPR Download failed");
 
-	htmlToXml(r.text.data());
+	std::string xml;
+
+	xml = htmlToXml(r.text.data());
+
+	pugi::xml_document pugiDoc;
+
+	pugi::xml_parse_result pugiResult = pugiDoc.load_buffer(xml.data(), xml.length());
+
+	std::cout << pugiResult.description();
+
+	exit(0);
 }
 
 
