@@ -1,0 +1,104 @@
+R=1 C=1: Returning doctype node <html PUBLIC="-//W3C//DTD XHTML 1.0 Transitional//EN" SYSTEM="https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> stream
+R=2 C=1: Returning starttag node <html xmlns="https://www.w3.org/1999/xhtml"> stream
+Entering ParseHTML...
+R=3 C=1: Have node Show_Node
+Returning starttag node <head> stream
+Enter ParseHead...
+R=3 C=7: Returning starttag node <meta http-equiv="Content-Type" content="text/html; charset=windows-1252"> stream
+R=4 C=9: Returning starttag node <title> stream
+R=4 C=9: Returning lex-token node <title> lexer
+R=4 C=16: Returning text TextNode [DEA Website!]12 stream
+R=4 C=28: Returning endtag node <title> stream
+R=5 C=1: Returning endtag node <head> stream
+Exit ParseHead 1...
+R=6 C=1: Returning starttag node <body> stream
+Before: HT20|HT32|H40S|H40T|H40F|H41S|H41T|H41F|X10S|X10T|X10F|XH11|XB10|----|HT50|XH50
+After : HT20|HT32|H40S|H40T|----|H41S|H41T|----|X10S|X10T|----|XH11|XB10|----|HT50|XH50
+Enter ParseBody...
+R=7 C=1: Returning starttag node <blockquote> stream
+Entering ParseBlock 1... 1 blockquote
+After : HT20|HT32|H40S|H40T|----|H41S|H41T|----|X10S|X10T|----|XH11|----|----|HT50|XH50
+R=8 C=1: Returning starttag node <hr> stream
+R=9 C=1: Returning starttag node <p style="text-align: center;"> stream
+Entering ParseInline 1...
+After : ----|----|H40S|H40T|----|H41S|H41T|----|X10S|X10T|----|XH11|----|----|HT50|XH50
+R=9 C=32: Returning starttag node <span style="font-size:36px;"> stream
+Entering ParseInline 2...
+R=9 C=62: Returning starttag node <span style="font-family:arial,helvetica,sans-serif;"> stream
+Entering ParseInline 3...
+R=9 C=116: Returning text TextNode [DEA bot,...er that.]1970 stream
+R=9 C=2172: Returning endtag node <span> stream
+Exit ParseInline 2 2...
+R=9 C=2179: Returning endtag node <span> stream
+Exit ParseInline 2 1...
+R=9 C=2186: Returning endtag node <p> stream
+Exit ParseInline 2 0...
+R=11 C=1: Returning starttag node <hr> stream
+R=12 C=1: Returning starttag node <p style="text-align: center;"> stream
+Entering ParseInline 1...
+R=12 C=32: Returning endtag node <p> stream
+Exit ParseInline 2 0...
+R=14 C=1: Returning starttag node <p> stream
+Entering ParseInline 1...
+R=14 C=4: Returning starttag node <span style="font-size:36px;"> stream
+Entering ParseInline 2...
+R=14 C=34: Returning starttag node <span style="font-family:arial,helvetica,sans-serif;"> stream
+Entering ParseInline 3...
+R=14 C=88: Returning text TextNode [ ]2 stream
+R=14 C=94: Returning endtag node <span> stream
+Exit ParseInline 2 2...
+R=14 C=101: Returning endtag node <span> stream
+Exit ParseInline 2 1...
+R=14 C=108: Returning endtag node <p> stream
+Exit ParseInline 2 0...
+R=15 C=1: Returning endtag node <blockquote> stream
+Exit ParseBlock 2 0...
+R=16 C=1: Returning endtag node <body> stream
+R=17 C=1: Returning endtag node <html> stream
+Returning NULL...
+Exit ParseBody 1...
+Exit ParseHTML 2...
+After : ----|----|----|----|----|----|----|----|X10S|X10T|----|XH11|----|----|HT50|XH50
+All nodes BEFORE clean and repair
+Root  
+ DocType   PUBLIC="-//W3C//DTD XHTML 1.0 Transitional//EN" SYSTEM="https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+ StartTag html   xmlns="https://www.w3.org/1999/xhtml"
+  StartTag head  
+   StartTag meta   http-equiv="Content-Type" content="text/html; charset=windows-1252"
+   StartTag title  
+    Text   (12) 'DEA Website!'
+  StartTag body  
+   StartTag blockquote  
+    StartEnd hr  
+    StartTag p   style="text-align: center;"
+     StartTag span   style="font-size:36px;"
+      StartTag span   style="font-family:arial,helvetica,sans-serif;"
+       Text   (1970) '...n we'll enter that.'
+    StartEnd hr  
+    StartTag p   style="text-align: center;"
+    StartTag p  
+     StartTag span   style="font-size:36px;"
+      StartTag span   style="font-family:arial,helvetica,sans-serif;"
+       Text   (2) ' '
+All nodes AFTER clean and repair
+Root  
+ DocType   PUBLIC="-//W3C//DTD XHTML 1.0 Strict//EN" SYSTEM="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
+ StartTag html   xmlns="http://www.w3.org/1999/xhtml"
+  StartTag head  
+   StartTag meta implicit  name="generator" content="HTML Tidy for HTML5 for Windows version 5.6.0"
+   StartTag meta   http-equiv="Content-Type" content="text/html; charset=utf-8"
+   StartTag title  
+    Text   (12) 'DEA Website!'
+  StartTag body  
+   StartTag blockquote  
+    StartEnd hr  
+    StartTag p   style="text-align: center;"
+     StartTag span   style="font-size:36px;"
+      StartTag span   style="font-family:arial,helvetica,sans-serif;"
+       Text   (1970) '...n we'll enter that.'
+    StartEnd hr  
+    StartTag p   style="text-align: center;"
+    StartTag p  
+     StartTag span   style="font-size:36px;"
+      StartTag span   style="font-family:arial,helvetica,sans-serif;"
+       Text   (2) ' '

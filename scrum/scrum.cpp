@@ -1,0 +1,77 @@
+#include "pch.h"
+#include "iostream"
+
+#include <pugixml.hpp>
+#include <tidy.h>
+#include <tidybuffio.h>
+#include <stdexcept>
+#include <cpr/cpr.h>
+#include <CLI/CLI.hpp>
+
+std::string htmlToXml(const char* html);
+
+int main(int argc, char **argv)
+{
+	CLI::App scraper{ "pog" };
+	
+	std::string url;
+	std::string html_tag;
+	std::string html_class;
+	
+	scraper.add_option("--url, --u", url, "the Url of the website to scrape");
+	scraper.add_option("--tag, --t", html_tag, "the html tag to search for");
+	scraper.add_option("--class, --c", html_class, "the class to search for");
+
+	CLI11_PARSE(scraper, argc, argv);
+
+	if (argc != 2)
+	{
+		std::cout << "Incorrect number of arguments, pass the website!";
+		exit(-1);
+	}
+
+	auto r = cpr::Get(cpr::Url{ url });
+	if (r.status_code != 200) throw std::runtime_error("CPR Download failed");
+
+	htmlToXml(r.text.data());
+}
+
+
+std::string htmlToXml(const char* html)
+{
+	TidyBuffer output = { 0 };
+	TidyBuffer errbuf = { 0 };
+	int rc = -1;
+	Bool ok;
+
+	TidyDoc tdoc = tidyCreate();
+	printf("Tidying:\t%s\n", html);
+
+	ok = tidyOptSetBool(tdoc, TidyXhtmlOut, yes);
+	if (ok) rc = tidySetErrorBuffer(tdoc, &errbuf);
+	if (rc >= 0) rc = tidyParseString(tdoc, html);
+	if (rc >= 0) rc = tidyCleanAndRepair(tdoc);
+	if (rc >= 0) rc = tidyRunDiagnostics(tdoc);
+	if (rc > 1) rc = (tidyOptSetBool(tdoc, TidyForceOutput, yes) ? rc : -1);
+	if (rc >= 0) rc = tidySaveBuffer(tdoc, &output);
+
+	if (rc >= 0)
+	{
+		if (rc > 0) printf("\nDiagnostics:\n\n%s", errbuf.bp);
+		printf("\nAnd here is the result:\n\n%s", output.bp);
+	}
+	else
+	{
+		printf("A severe error (%d) occurred.\n", rc);
+	}
+
+	auto res = std::string((char*)output.bp);
+
+	tidyBufFree(&output);
+	tidyBufFree(&errbuf);
+	tidyRelease(tdoc);
+
+	if (rc != 0) throw std::runtime_error((char*)errbuf.bp);
+
+	return res;
+}

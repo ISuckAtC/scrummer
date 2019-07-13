@@ -1,0 +1,7 @@
+# Editor
+.vs
+
+# Build
+Debug
+Release
+x64
