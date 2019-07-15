@@ -12,6 +12,8 @@ std::string htmlToXml(const char* html);
 
 int main(int argc, char **argv)
 {
+	std::string example = "span";
+
 	CLI::App scraper{ "pog" };
 	
 	std::string url;
@@ -24,24 +26,37 @@ int main(int argc, char **argv)
 
 	CLI11_PARSE(scraper, argc, argv);
 
-	if (argc != 2)
-	{
-		std::cout << "Incorrect number of arguments, pass the website!";
-		exit(-1);
-	}
-
 	auto r = cpr::Get(cpr::Url{ url });
-	if (r.status_code != 200) throw std::runtime_error("CPR Download failed");
+	if (r.status_code != 200) throw std::runtime_error("CPR Download failed\n");
 
 	std::string xml;
 
 	xml = htmlToXml(r.text.data());
 
+	std::cout << "printing converted -> xml...\n";
+
+	std::cout << xml;
+
 	pugi::xml_document pugiDoc;
 
 	pugi::xml_parse_result pugiResult = pugiDoc.load_buffer(xml.data(), xml.length());
 
-	std::cout << pugiResult.description();
+	std::cout << pugiResult.description() << "\n";
+
+	// example of accessing a node through navigating the tree
+	// pugi::xml_node titleNode = pugiDoc.child("html").child("head").child("title"); 
+
+	// find the node using the HTML tag provided in the command line using a lembda expression, this one will specifically find a node with a PCDATA child node (by checking if its NOT blank)
+	const auto nodeFound = pugiDoc.find_node([&](auto x) { return x.name() == html_tag && (std::string)x.child_value() != ""; }); 
+
+	std::cout << nodeFound.child_value();
+
+	if (nodeFound.empty()) std::cout << "EMPTY\n";
+
+	// saves the xml doc to a file
+	// std::cout << pugiDoc.save_file("PATH");
+
+	std::cout << "\n";
 
 	exit(0);
 }
